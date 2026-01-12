@@ -32,6 +32,7 @@ const rgExcludeArg = getArg('--rg-exclude', null);
 const useRag = process.argv.includes('--rag');
 const ragIndexPath = getArg('--rag-index', null);
 const ragTopK = toInt(getArg('--rag-topk', '5'), 5);
+const includeFilesArg = getArg('--include-files', null);
 
 if (!question) {
   console.error('Missing --question "..."');
@@ -297,6 +298,13 @@ function normalize(vec) {
   return vec.map((v) => v / norm);
 }
 
+function stripFences(text) {
+  let cleaned = text.replace(/```diff|```/g, '');
+  cleaned = cleaned.replace(/^diff\s*[\r\n]/i, '');
+  cleaned = cleaned.replace(/[\r\n]diff[\r\n]/ig, '\n');
+  return cleaned;
+}
+
 async function retrieveRag(root, questionText) {
   const indexPath = ragIndexPath || path.join(root, '.forge', 'rag_index.json');
   const index = loadRagIndex(indexPath);
@@ -349,6 +357,16 @@ async function gatherContext() {
   const rgMatches = parseRipgrepMatches(rgOutput);
   const rgSnippets = buildSnippets(root, rgMatches);
 
+  const includeFiles = splitGlobArg(includeFilesArg);
+  const includeFileContents = [];
+  for (const rel of includeFiles) {
+    const full = path.join(root, rel);
+    const text = readFileSafe(full, maxBytes);
+    if (text) {
+      includeFileContents.push(`--- ${rel} ---\n${text.trim()}`);
+    }
+  }
+
   let ragResults = [];
   let ragNotice = null;
   if (useRag) {
@@ -364,7 +382,8 @@ async function gatherContext() {
     rgOutput,
     rgSnippets,
     ragResults,
-    ragNotice
+    ragNotice,
+    includeFileContents
   };
 }
 
@@ -412,7 +431,8 @@ async function chatWithOllama(systemPrompt, userContent) {
       if (!line) continue;
       const json = JSON.parse(line);
       if (json.message && json.message.content) {
-        process.stdout.write(json.message.content);
+        const cleaned = stripFences(json.message.content);
+        process.stdout.write(cleaned);
       }
     }
   }
@@ -420,7 +440,8 @@ async function chatWithOllama(systemPrompt, userContent) {
 
 async function main() {
   const systemPrompt = loadSystemPrompt();
-  const { root, tree, keyFileContents, rgOutput, rgSnippets, ragResults, ragNotice } = await gatherContext();
+  const { root, tree, keyFileContents, rgOutput, rgSnippets, ragResults, ragNotice, includeFileContents } = await gatherContext();
+  const hasIncludedFiles = includeFileContents.length > 0;
 
   const contextParts = [];
   if (useRag) {
@@ -435,7 +456,9 @@ async function main() {
     }
   }
 
-  if (rgSnippets.length) {
+  if (hasIncludedFiles) {
+    contextParts.push('Requested files:\n' + includeFileContents.join('\n\n'));
+  } else if (rgSnippets.length) {
     contextParts.push('Snippets (rg matches):\n' + rgSnippets.join('\n\n'));
   } else {
     contextParts.push('Repo tree (limited):\n' + (tree.length ? tree.join('\n') : 'n/a'));
@@ -447,7 +470,9 @@ async function main() {
 
   const userContent = [
     `Question: ${question}`,
-    '\nUse ONLY the provided snippets. If the answer is not in the snippets, reply with: NEED_FILES: <paths>.',
+    hasIncludedFiles
+      ? '\nUse ONLY the provided context. Output ONLY a unified diff. If you need more files, reply with: NEED_FILES: <paths>.'
+      : '\nUse ONLY the provided snippets. If the answer is not in the snippets, reply with: NEED_FILES: <paths>.',
     '\nContext:\n' + context
   ].join('\n');
 
