@@ -442,6 +442,10 @@ Voy a asumir **stack Node/TypeScript** (por tu perfil full-stack) y CLI primero 
 
 * "¿Dónde se calcula el contraste WCAG?"
 
+**Estado**
+
+* ✅ Completado (Sprint 1 validado con respuesta correcta: `lib/color/accessibility.ts`).
+
 
 
 
@@ -516,6 +520,17 @@ Voy a asumir **stack Node/TypeScript** (por tu perfil full-stack) y CLI primero 
 
 
 * Recuperación consistente en 2-3 consultas seguidas.
+
+**Resultados Sprint 2**
+
+* RAG indexado en `.forge/rag_index.json` (embeddings Ollama).
+* Consulta "¿Dónde se ajusta el contraste para AA/AAA?": correcto en `lib/color/accessibility.ts`.
+* Consulta "¿Cómo funciona el login?": respondió `NEED_FILES` (requiere abrir archivo).
+* Consulta "¿Dónde se define el modelo OKLCH?": apunta a `lib/color/oklch` vía imports.
+
+**Estado**
+
+* ✅ Completado (DoD validado con 3 consultas).
 
 
 

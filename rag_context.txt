@@ -1,0 +1,292 @@
+Question: ¿Dónde se ajusta el contraste para AA/AAA?
+
+Use ONLY the provided snippets. If the answer is not in the snippets, reply with: NEED_FILES: <paths>.
+
+Context:
+RAG (semantic matches):
+--- README.md (lines 27-72) ---
+cent, Background, Surface, Text, Muted**
+* Roles claramente definidos para diseño de UI
+* Jerarquía visual integrada
+
+### ♿ Accesibilidad integrada
+
+* Cálculo automático de contraste WCAG (AA/AAA)
+* Simulador de daltonismo (protanopia, deuteranopia, tritanopia)
+* Auto-fix de contraste manteniendo coherencia tonal
+
+### 🌓 Tema dual (Light/Dark)
+
+Genera automáticamente variantes light y dark coherentes con métricas de contraste.
+
+### 📤 Exports profesionales
+
+* CSS variables
+* Tailwind config
+* JSON tokens
+* Material UI theme
+* Plugins para Figma, Sketch, VS Code
+* Apple .clr format
+
+---
+
+## 🚀 Estado del MVP
+
+| Sprint | Feature | Estado |
+| ------ | ------- | ------ |
+| 0      | Setup fundacional | ✅ Completado |
+| 1      | Energy & Tension | ✅ Completado |
+| 2      | Field 2D interactivo | ✅ Completado |
+| 3      | Palette kits | ✅ Completado |
+| 4      | Accesibilidad | ✅ Completado |
+| 5      | Free/Pro model | ✅ Completado |
+| 6      | Export & persistencia | ✅ Completado |
+| 7      | Polish & release | ✅ Completado |
+| 8+     | Post-MVP features | 📋 Planificado |
+
+**Versión actual:** MVP funcional y público
+
+---
+
+## 📊 Posicionamiento vs Competencia
+
+| Aspecto | Coolors | Tona
+
+--- MVP.md (lines 426-479) ---
+a distintos tamaños de paleta.
+
+### Alcance
+
+* Selección de 3/5/7 roles
+* Reglas de proporción (60-30-10)
+* Recomendaciones de uso por rol
+
+### Entregables
+
+* Selector de tamaño de kit
+* Jerarquías aplicables en UI
+
+---
+
+## Sprint 16 — Tema dual (light/dark)
+
+**Objetivo:** Generar variantes light/dark coherentes.
+
+### Alcance
+
+* Derivación automática dual
+* Ajustes de contraste por modo
+* Preview simultáneo
+
+### Entregables
+
+* Paletas duales consistentes
+* Preview de UI en ambos modos
+
+---
+
+---
+
+## 📊 Evaluación Estratégica vs Coolors (estado actual)
+
+### Matriz Comparativa
+
+| Aspecto                | Coolors | Tonal Field | Ventaja |
+| ---------------------- | ------- | ----------- | ------- |
+| **Entrada rápida**     | ✅      | ⚠️ mejora  | Coolors |
+| **Control real**       | ❌      | ✅          | TF      |
+| **Sistema de color**   | ❌      | ✅          | TF      |
+| **Accesibilidad**      | ❌      | ✅          | TF      |
+| **Comunidad**          | Pasiva  | Activa      | TF      |
+| **Dev friendliness**   | Media   | Alta        | TF      |
+| **Diferenciación**     | Baja    | Muy alta    | TF      |
+
+### Estado actual
+
+**Lo que ya ganáis:**
+
+* Field 2D como diferencial real
+
+--- MVP.md (lines 158-232) ---
+ctamente en un producto
+* Se percibe como sistema, no como inspiración
+
+---
+
+## 🟦 Sprint 4 — Accesibilidad y Confianza
+
+**Duración:** 4–5 días
+
+### Objetivo
+
+Hacer que Tonal Field sea utilizable en producción real.
+
+### Alcance
+
+* Cálculo de contraste WCAG:
+
+  * AA / AAA
+* Indicadores visuales claros
+* **Fix contrast**:
+
+  * Ajuste automático de lightness
+  * Manteniendo el carácter tonal
+
+### Entregables
+
+* Badges de accesibilidad
+* Corrección automática funcional
+
+### DoD
+
+* El usuario no necesita herramientas externas
+* Accesibilidad integrada, no opcional
+
+---
+
+## 🟦 Sprint 5 — Free vs Pro (Monetización suave)
+
+**Duración:** 4–5 días
+
+### Objetivo
+
+Introducir el modelo de pago sin romper la experiencia.
+
+### Alcance
+
+* Definición de límites Free:
+
+  * Preview de kits
+  * Export básico (HEX)
+  * Guardado limitado
+* Features Pro activables:
+
+  * Kits completos
+  * Auto-fix avanzado
+  * Guardado ilimitado
+* UX de upgrade contextual (no intrusivo)
+
+### Entregables
+
+* Lógica Free / Pro
+* Mensajes de upgrade claros y elegantes
+
+### DoD
+
+* El valor Pro se entiende antes de pagar
+* No hay paywalls agresivos
+
+---
+
+## 🟦 Sprint 6 — Export & Persistencia
+
+**Duración:** 4–5 días
+
+### Obje
+
+--- README.md (lines 1-34) ---
+# Tonal Field
+
+Explore color as a continuous space
+
+Tonal Field es una herramienta de diseño de sistemas de color que permite explorar el color como un campo continuo, controlado por dos dimensiones intuitivas: **Energy** (Calm → Vivid) y **Tension** (Soft → Sharp).
+
+A diferencia de herramientas como Coolors que generan paletas aleatorias, Tonal Field ofrece **control inteligente y criterio matemático** para crear sistemas de color utilizables directamente en producción.
+
+---
+
+## ✨ Características principales
+
+### 🎨 Field 2D (Diferencial de producto)
+
+Explora el color como un espacio continuo en lugar de colores discretos. Manipula Energy y Tension para entender cómo se relacionan los colores.
+
+### ⚡ Energy & Tension
+
+* **Energy:** Controla la saturación y vivacidad (Calm → Vivid)
+* **Tension:** Define la armonía y contraste (Soft → Sharp)
+* Algoritmo propio basado en métricas de color OKLCH
+
+### 🎯 Palette Kits
+
+Generación automática de sistemas de color utilizables:
+
+* **Primary, Accent, Background, Surface, Text, Muted**
+* Roles claramente definidos para diseño de UI
+* Jerarquía visual integrada
+
+### ♿ Accesibilidad integrada
+
+* Cálculo automático de contraste WCAG (AA/AAA)
+* S
+
+--- MVP.md (lines 614-628) ---
+te MVP:
+
+* No es un "color picker"
+* Es un **marco conceptual + herramienta práctica**
+* Está preparado para crecer (AI, teams, presets, comparación)
+* **Estratégicamente:** Ya vence a Coolors en profundidad. Próximo paso es mejorar accesibilidad/claridad.
+
+Si quieres, el siguiente paso lógico sería:
+
+* convertir estos sprints en **issues técnicas**, o
+* redactarlos como **documentación de TFG / pitch deck**, o
+* bajar uno de los sprints (por ejemplo el 1 o el 2) a **pseudo-código y arquitectura real**.
+
+Tú decides por dónde seguimos.
+
+Snippets (rg matches):
+--- app\guides\color-blindness\page.tsx (match at 43) ---
+40:         <h2>Design Principles</h2>
+41:         <ul>
+42:           <li>Never use color alone to convey meaning</li>
+43:           <li>Provide sufficient contrast (WCAG AA/AAA)</li>
+44:           <li>Test with color blindness simulators</li>
+45:           <li>Use luminance (lightness) as primary cue</li>
+46:           <li>Pair colors with patterns or icons when critical</li>
+
+--- lib\color\tonal.ts (match at 104) ---
+101:  * Material Design 3 principle:
+102:  * - 40 tone difference ≈ 3.0:1 contrast ratio
+103:  * - 50 tone difference ≈ 4.5:1 (WCAG AA minimum)
+104:  * - 60 tone difference ≈ 7:1 (WCAG AAA)
+105:  *
+106:  * This is more predictable than WCAG's relative luminance calculation
+107:  * because OKLCH L* is perceptually linear
+
+--- app\guides\wcag-contrast\page.tsx (match at 6) ---
+3: 
+4: export const metadata: Metadata = {
+5:   title: 'WCAG Contrast Guide - Tonal Field',
+6:   description: 'Master WCAG 2.1 contrast requirements for accessible color systems. Learn AA vs AAA and how to test contrast ratios.',
+7: };
+8: 
+9: export default function WcagContrastGuide() {
+
+--- app\guides\wcag-contrast\page.tsx (match at 46) ---
+43:               <td style={{ padding: '12px' }}>3:1</td>
+44:             </tr>
+45:             <tr>
+46:               <td style={{ padding: '12px' }}>AAA (Enhanced)</td>
+47:               <td style={{ padding: '12px' }}>7:1</td>
+48:               <td style={{ padding: '12px' }}>4.5:1</td>
+49:             </tr>
+
+--- app\guides\wcag-contrast\page.tsx (match at 58) ---
+55:         <h2>Best Practices</h2>
+56:         <ul>
+57:           <li>Always test text on background combinations</li>
+58:           <li>Aim for AAA where possible (7:1 ratio)</li>
+59:           <li>Use Tonal Field&apos;s built-in contrast checker</li>
+60:           <li>Test with real users when possible</li>
+61:           <li>Don&apos;t rely on color alone for meaning</li>
+
+--- app\guides\page.tsx (match at 34) ---
+31:     },
+32:     {
+33:       title: 'WCAG Contrast Guide',
+34:       description: 'Understand WCAG 2.1 requirements. Learn AA vs AAA levels and how to ensure accessible color pairs.',
+35:       href: '/guides/wcag-contrast',
+36:       icon: '♿',
+37:     },

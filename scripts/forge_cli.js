@@ -19,6 +19,7 @@ function toInt(value, fallback) {
 const repoPath = getArg('--repo', process.cwd());
 const question = getArg('--question', null) || getArg('-q', null);
 const model = getArg('--model', DEFAULT_MODEL);
+const embedModel = getArg('--embed-model', 'nomic-embed-text');
 const maxDepth = toInt(getArg('--max-depth', '3'), 3);
 const maxFiles = toInt(getArg('--max-files', '80'), 80);
 const maxBytes = toInt(getArg('--max-bytes', '12000'), 12000);
@@ -28,6 +29,9 @@ const dryRun = process.argv.includes('--dry-run');
 const dumpPath = getArg('--dump', null);
 const rgIncludeArg = getArg('--rg-include', null);
 const rgExcludeArg = getArg('--rg-exclude', null);
+const useRag = process.argv.includes('--rag');
+const ragIndexPath = getArg('--rag-index', null);
+const ragTopK = toInt(getArg('--rag-topk', '5'), 5);
 
 if (!question) {
   console.error('Missing --question "..."');
@@ -237,7 +241,81 @@ function buildSnippets(root, matches, maxSnippets = 6, contextLines = 3) {
   return snippets;
 }
 
-function gatherContext() {
+function loadRagIndex(indexPath) {
+  try {
+    const raw = fs.readFileSync(indexPath, 'utf8');
+    return JSON.parse(raw);
+  } catch {
+    return null;
+  }
+}
+
+function cosineSim(a, b) {
+  if (!a || !b || a.length !== b.length) return 0;
+  let sum = 0;
+  for (let i = 0; i < a.length; i++) sum += a[i] * b[i];
+  return sum;
+}
+
+function pathBoost(root, filePath) {
+  const rel = path.relative(root, filePath).replace(/\\/g, '/');
+  let score = 0;
+  if (rel.startsWith('src/') || rel.startsWith('lib/') || rel.startsWith('app/')) score += 0.08;
+  if (rel.includes('/lib/')) score += 0.04;
+  if (rel.includes('/src/')) score += 0.04;
+  if (rel.includes('/app/')) score += 0.02;
+  const ext = path.extname(rel).toLowerCase();
+  const codeExts = new Set(['.ts', '.tsx', '.js', '.jsx', '.py', '.go', '.rs', '.java', '.kt', '.cs', '.cpp', '.c', '.rb', '.php', '.swift']);
+  const docExts = new Set(['.md', '.mdx', '.txt', '.pdf']);
+  if (codeExts.has(ext)) score += 0.06;
+  if (docExts.has(ext)) score -= 0.08;
+  return score;
+}
+
+async function embedText(text) {
+  const url = `${DEFAULT_URL}/api/embeddings`;
+  const body = { model: embedModel, prompt: text };
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+  if (!res.ok) {
+    const errText = await res.text();
+    throw new Error(`HTTP ${res.status}: ${errText}`);
+  }
+  const json = await res.json();
+  return Array.isArray(json.embedding) ? json.embedding : null;
+}
+
+function normalize(vec) {
+  if (!vec) return null;
+  let sum = 0;
+  for (const v of vec) sum += v * v;
+  const norm = Math.sqrt(sum);
+  if (!norm) return vec;
+  return vec.map((v) => v / norm);
+}
+
+async function retrieveRag(root, questionText) {
+  const indexPath = ragIndexPath || path.join(root, '.forge', 'rag_index.json');
+  const index = loadRagIndex(indexPath);
+  if (!index || !Array.isArray(index.chunks) || index.chunks.length === 0) {
+    return { results: [], notice: `RAG index not found. Run: node scripts/rag_index.js --repo "${root}"` };
+  }
+
+  const queryVec = normalize(await embedText(questionText));
+  if (!queryVec) return { results: [], notice: 'RAG embedding failed.' };
+
+  const scored = index.chunks.map((chunk) => {
+    const score = cosineSim(queryVec, chunk.embedding) + pathBoost(root, chunk.file);
+    return { score, chunk };
+  }).sort((a, b) => b.score - a.score).slice(0, ragTopK);
+
+  return { results: scored.map((s) => s.chunk), notice: null };
+}
+
+async function gatherContext() {
   const root = path.resolve(repoPath);
   const tree = listTree(root, maxDepth, maxFiles);
 
@@ -271,11 +349,22 @@ function gatherContext() {
   const rgMatches = parseRipgrepMatches(rgOutput);
   const rgSnippets = buildSnippets(root, rgMatches);
 
+  let ragResults = [];
+  let ragNotice = null;
+  if (useRag) {
+    const rag = await retrieveRag(root, question);
+    ragResults = rag.results;
+    ragNotice = rag.notice;
+  }
+
   return {
+    root,
     tree,
     keyFileContents,
     rgOutput,
-    rgSnippets
+    rgSnippets,
+    ragResults,
+    ragNotice
   };
 }
 
@@ -331,9 +420,20 @@ async function chatWithOllama(systemPrompt, userContent) {
 
 async function main() {
   const systemPrompt = loadSystemPrompt();
-  const { tree, keyFileContents, rgOutput, rgSnippets } = gatherContext();
+  const { root, tree, keyFileContents, rgOutput, rgSnippets, ragResults, ragNotice } = await gatherContext();
 
   const contextParts = [];
+  if (useRag) {
+    if (ragNotice) {
+      contextParts.push(`RAG:\n${ragNotice}`);
+    } else if (ragResults.length) {
+      const ragText = ragResults.map((r) => {
+        const rel = path.relative(root, r.file);
+        return `--- ${rel} (lines ${r.startLine}-${r.endLine}) ---\n${r.text}`;
+      }).join('\n\n');
+      contextParts.push('RAG (semantic matches):\n' + ragText);
+    }
+  }
 
   if (rgSnippets.length) {
     contextParts.push('Snippets (rg matches):\n' + rgSnippets.join('\n\n'));
