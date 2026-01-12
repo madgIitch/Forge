@@ -1,0 +1,760 @@
+Question: ¿Dónde se calcula X?
+
+Use the context below. If missing info, ask for specific files or a ripgrep search.
+
+Context:
+Repo tree (limited):
+.claude\
+.claude\settings.local.json
+.env.local
+.eslintrc.json
+.gitattributes
+.gitignore
+app\
+app\community\
+app\community\page.tsx
+app\cookies\
+app\cookies\page.tsx
+app\globals.css
+app\guides\
+app\guides\color-blindness\
+app\guides\color-systems\
+app\guides\coolors-alternative\
+app\guides\design-tokens\
+app\guides\dual-theme\
+app\guides\energy-tension\
+app\guides\layout.tsx
+app\guides\material-design-3\
+app\guides\oklch-color-space\
+app\guides\page.tsx
+app\guides\wcag-contrast\
+app\icon.png
+app\layout.tsx
+app\legal\
+app\legal\page.tsx
+app\license\
+app\license\page.tsx
+app\page.tsx
+app\pricing\
+app\pricing\page.tsx
+app\privacy\
+app\privacy\page.tsx
+app\robots.ts
+app\sitemap.ts
+app\studio\
+app\studio\page.tsx
+app\system\
+app\system\page.tsx
+app\terms\
+app\terms\page.tsx
+app\vs-coolors\
+app\vs-coolors\page.tsx
+app\vs-coolors\schema.json
+color-design-doc.pdf
+components\
+components\AuthModal.css
+components\AuthModal.tsx
+components\Field.tsx
+components\Footer.tsx
+components\Frame.tsx
+components\Header.tsx
+components\LegalPage.tsx
+components\Section.tsx
+components\Slider.tsx
+components\SubscriptionManager.tsx
+components\UpgradeModal.css
+components\UpgradeModal.tsx
+deploy-supabase-functions.md
+IMPLEMENTATION_SUMMARY.md
+lib\
+lib\auth\
+lib\auth\AuthProvider.tsx
+lib\color\
+lib\color\accessibility.ts
+lib\color\contrast.ts
+lib\color\export.ts
+lib\color\extract.ts
+lib\color\hierarchy.ts
+lib\color\model.ts
+lib\color\oklch.ts
+lib\color\palette.ts
+lib\color\theme.ts
+lib\color\tokens.ts
+lib\color\tonal.ts
+lib\community\
+lib\community\service.ts
+lib\community\supabase-service.ts
+
+
+Key files:
+--- README.md ---
+# Tonal Field
+
+Explore color as a continuous space
+
+Tonal Field es una herramienta de diseño de sistemas de color que permite explorar el color como un campo continuo, controlado por dos dimensiones intuitivas: **Energy** (Calm → Vivid) y **Tension** (Soft → Sharp).
+
+A diferencia de herramientas como Coolors que generan paletas aleatorias, Tonal Field ofrece **control inteligente y criterio matemático** para crear sistemas de color utilizables directamente en producción.
+
+---
+
+## ✨ Características principales
+
+### 🎨 Field 2D (Diferencial de producto)
+
+Explora el color como un espacio continuo en lugar de colores discretos. Manipula Energy y Tension para entender cómo se relacionan los colores.
+
+### ⚡ Energy & Tension
+
+* **Energy:** Controla la saturación y vivacidad (Calm → Vivid)
+* **Tension:** Define la armonía y contraste (Soft → Sharp)
+* Algoritmo propio basado en métricas de color OKLCH
+
+### 🎯 Palette Kits
+
+Generación automática de sistemas de color utilizables:
+
+* **Primary, Accent, Background, Surface, Text, Muted**
+* Roles claramente definidos para diseño de UI
+* Jerarquía visual integrada
+
+### ♿ Accesibilidad integrada
+
+* Cálculo automático de contraste WCAG (AA/AAA)
+* Simulador de daltonismo (protanopia, deuteranopia, tritanopia)
+* Auto-fix de contraste manteniendo coherencia tonal
+
+### 🌓 Tema dual (Light/Dark)
+
+Genera automáticamente variantes light y dark coherentes con métricas de contraste.
+
+### 📤 Exports profesionales
+
+* CSS variables
+* Tailwind config
+* JSON tokens
+* Material UI theme
+* Plugins para Figma, Sketch, VS Code
+* Apple .clr format
+
+---
+
+## 🚀 Estado del MVP
+
+| Sprint | Feature | Estado |
+| ------ | ------- | ------ |
+| 0      | Setup fundacional | ✅ Completado |
+| 1      | Energy & Tension | ✅ Completado |
+| 2      | Field 2D interactivo | ✅ Completado |
+| 3      | Palette kits | ✅ Completado |
+| 4      | Accesibilidad | ✅ Completado |
+| 5      | Free/Pro model | ✅ Completado |
+| 6      | Export & persistencia | ✅ Completado |
+| 7      | Polish & release | ✅ Completado |
+| 8+     | Post-MVP features | 📋 Planificado |
+
+**Versión actual:** MVP funcional y público
+
+---
+
+## 📊 Posicionamiento vs Competencia
+
+| Aspecto | Coolors | Tonal Field | Ventaja |
+| ------- | ------- | ----------- | ------- |
+| Entrada rápida | ✅ | ⚠️ mejora | Coolors |
+| Control real | ❌ | ✅ | TF |
+| Sistema de color | ❌ | ✅ | TF |
+| Accesibilidad | ❌ | ✅ | TF |
+| Comunidad | Pasiva | Activa | TF |
+| Dev friendliness | Media | Alta | TF |
+| Diferenciación | Baja | Muy alta | TF |
+
+**Veredicto:** Tonal Field es más inteligente y potente. El próximo paso es mejorar accesibilidad/claridad para nuevos usuarios.
+
+---
+
+## 🛠️ Stack técnico
+
+* **Frontend:** Next.js 14 + TypeScript + React 18
+* **Color space:** OKLCH (native, WCAG-aware)
+* **Styling:** CSS + CSS variables
+* **State management:** React hooks
+* **Build:** Webpack (Next.js default)
+* **Deploy:** Vercel (recomendado)
+
+---
+
+## 📦 Instalación
+
+```bash
+# Clonar repositorio
+git clone https://github.com/yourusername/tonal-field.git
+cd tonal-field
+
+# Instalar dependencias
+npm install
+
+# Ejecutar servidor de desarrollo
+npm run dev
+
+# Build para producción
+npm run build
+
+# Iniciar servidor de producción
+npm run start
+```
+
+El servidor estará disponible en `http://localhost:3000`
+
+---
+
+## 📖 Documentación
+
+Consulta [MVP.md](./MVP.md) para:
+
+* Desglose detallado de sprints
+* Evaluación estratégica
+* Recomendaciones de UX
+* Roadmap post-MVP
+
+---
+
+## 🎯 Próximas mejoras (Sprints 8+)
+
+### Sprint 8 — Generación rápida y presets
+
+* Shuffle automático con seed consistente
+* Galería de presets populares
+* Variaciones rápidas
+
+### Sprint 9 — Lock por rol
+
+* Fijar colores individuales
+* Recalcular respetando locks
+* UI intuitiva de bloqueo
+
+### Sprint 10 — Importación desde imagen
+
+* Upload de imagen
+* Extracción de colores dominantes
+* OCR opcional para tonos
+
+### Sprint 11 — Exports ampliados
+
+* RGB, HSL, LCH además de OKLCH/HEX
+* Configs para más frameworks
+* Plugins para diseño (Figma, Sketch, VS Code)
+
+### Sprint 12 — Accesibilidad avanzada
+
+* Auto-fix para AA/AAA en todos los roles
+* Recomendaciones detalladas por par
+* Simulación visual mejorada
+
+### Sprint 13+ — AI y comunidad
+
+* Sugerencias inteligentes por estilo
+* Biblioteca pública de paletas
+* Sistema de colaboración
+
+---
+
+## 🤝 Contribuir
+
+Para contribuir al proyecto:
+
+1. Fork el repositorio
+2. Crea una rama para tu feature (`git checkout -b feature/mi-feature`)
+3. Commit tus cambios (`git commit -m "Add mi-feature"`)
+4. Push a la rama (`git push origin feature/mi-feature`)
+5. Abre un Pull Request
+
+Consulta [MVP.md](./MVP.md) para entender el roadmap y prioridades.
+
+---
+
+## 📄 Licencia
+
+MIT
+
+---
+
+## 🙋 Soporte
+
+Para reportar bugs o sugerir features:
+
+* Issues en GitHub
+* Email: [tu-email]
+* Twitter: [@tonalfield]
+
+---
+
+## 🎓 Créditos
+
+Tonal Field fue creado como herramienta educativa y profesional para diseño de sistemas de color.
+
+**Basado en:**
+
+* OKLCH color space (CSS Working Group)
+* Material Design 3 tonal system
+* WCAG 2.1 accessibility standards
+* Color science best practices
+
+---
+
+**Made with ❤️ for designers and developers**
+
+--- readme.md ---
+# Tonal Field
+
+Explore color as a continuous space
+
+Tonal Field es una herramienta de diseño de sistemas de color que permite explorar el color como un campo continuo, controlado por dos dimensiones intuitivas: **Energy** (Calm → Vivid) y **Tension** (Soft → Sharp).
+
+A diferencia de herramientas como Coolors que generan paletas aleatorias, Tonal Field ofrece **control inteligente y criterio matemático** para crear sistemas de color utilizables directamente en producción.
+
+---
+
+## ✨ Características principales
+
+### 🎨 Field 2D (Diferencial de producto)
+
+Explora el color como un espacio continuo en lugar de colores discretos. Manipula Energy y Tension para entender cómo se relacionan los colores.
+
+### ⚡ Energy & Tension
+
+* **Energy:** Controla la saturación y vivacidad (Calm → Vivid)
+* **Tension:** Define la armonía y contraste (Soft → Sharp)
+* Algoritmo propio basado en métricas de color OKLCH
+
+### 🎯 Palette Kits
+
+Generación automática de sistemas de color utilizables:
+
+* **Primary, Accent, Background, Surface, Text, Muted**
+* Roles claramente definidos para diseño de UI
+* Jerarquía visual integrada
+
+### ♿ Accesibilidad integrada
+
+* Cálculo automático de contraste WCAG (AA/AAA)
+* Simulador de daltonismo (protanopia, deuteranopia, tritanopia)
+* Auto-fix de contraste manteniendo coherencia tonal
+
+### 🌓 Tema dual (Light/Dark)
+
+Genera automáticamente variantes light y dark coherentes con métricas de contraste.
+
+### 📤 Exports profesionales
+
+* CSS variables
+* Tailwind config
+* JSON tokens
+* Material UI theme
+* Plugins para Figma, Sketch, VS Code
+* Apple .clr format
+
+---
+
+## 🚀 Estado del MVP
+
+| Sprint | Feature | Estado |
+| ------ | ------- | ------ |
+| 0      | Setup fundacional | ✅ Completado |
+| 1      | Energy & Tension | ✅ Completado |
+| 2      | Field 2D interactivo | ✅ Completado |
+| 3      | Palette kits | ✅ Completado |
+| 4      | Accesibilidad | ✅ Completado |
+| 5      | Free/Pro model | ✅ Completado |
+| 6      | Export & persistencia | ✅ Completado |
+| 7      | Polish & release | ✅ Completado |
+| 8+     | Post-MVP features | 📋 Planificado |
+
+**Versión actual:** MVP funcional y público
+
+---
+
+## 📊 Posicionamiento vs Competencia
+
+| Aspecto | Coolors | Tonal Field | Ventaja |
+| ------- | ------- | ----------- | ------- |
+| Entrada rápida | ✅ | ⚠️ mejora | Coolors |
+| Control real | ❌ | ✅ | TF |
+| Sistema de color | ❌ | ✅ | TF |
+| Accesibilidad | ❌ | ✅ | TF |
+| Comunidad | Pasiva | Activa | TF |
+| Dev friendliness | Media | Alta | TF |
+| Diferenciación | Baja | Muy alta | TF |
+
+**Veredicto:** Tonal Field es más inteligente y potente. El próximo paso es mejorar accesibilidad/claridad para nuevos usuarios.
+
+---
+
+## 🛠️ Stack técnico
+
+* **Frontend:** Next.js 14 + TypeScript + React 18
+* **Color space:** OKLCH (native, WCAG-aware)
+* **Styling:** CSS + CSS variables
+* **State management:** React hooks
+* **Build:** Webpack (Next.js default)
+* **Deploy:** Vercel (recomendado)
+
+---
+
+## 📦 Instalación
+
+```bash
+# Clonar repositorio
+git clone https://github.com/yourusername/tonal-field.git
+cd tonal-field
+
+# Instalar dependencias
+npm install
+
+# Ejecutar servidor de desarrollo
+npm run dev
+
+# Build para producción
+npm run build
+
+# Iniciar servidor de producción
+npm run start
+```
+
+El servidor estará disponible en `http://localhost:3000`
+
+---
+
+## 📖 Documentación
+
+Consulta [MVP.md](./MVP.md) para:
+
+* Desglose detallado de sprints
+* Evaluación estratégica
+* Recomendaciones de UX
+* Roadmap post-MVP
+
+---
+
+## 🎯 Próximas mejoras (Sprints 8+)
+
+### Sprint 8 — Generación rápida y presets
+
+* Shuffle automático con seed consistente
+* Galería de presets populares
+* Variaciones rápidas
+
+### Sprint 9 — Lock por rol
+
+* Fijar colores individuales
+* Recalcular respetando locks
+* UI intuitiva de bloqueo
+
+### Sprint 10 — Importación desde imagen
+
+* Upload de imagen
+* Extracción de colores dominantes
+* OCR opcional para tonos
+
+### Sprint 11 — Exports ampliados
+
+* RGB, HSL, LCH además de OKLCH/HEX
+* Configs para más frameworks
+* Plugins para diseño (Figma, Sketch, VS Code)
+
+### Sprint 12 — Accesibilidad avanzada
+
+* Auto-fix para AA/AAA en todos los roles
+* Recomendaciones detalladas por par
+* Simulación visual mejorada
+
+### Sprint 13+ — AI y comunidad
+
+* Sugerencias inteligentes por estilo
+* Biblioteca pública de paletas
+* Sistema de colaboración
+
+---
+
+## 🤝 Contribuir
+
+Para contribuir al proyecto:
+
+1. Fork el repositorio
+2. Crea una rama para tu feature (`git checkout -b feature/mi-feature`)
+3. Commit tus cambios (`git commit -m "Add mi-feature"`)
+4. Push a la rama (`git push origin feature/mi-feature`)
+5. Abre un Pull Request
+
+Consulta [MVP.md](./MVP.md) para entender el roadmap y prioridades.
+
+---
+
+## 📄 Licencia
+
+MIT
+
+---
+
+## 🙋 Soporte
+
+Para reportar bugs o sugerir features:
+
+* Issues en GitHub
+* Email: [tu-email]
+* Twitter: [@tonalfield]
+
+---
+
+## 🎓 Créditos
+
+Tonal Field fue creado como herramienta educativa y profesional para diseño de sistemas de color.
+
+**Basado en:**
+
+* OKLCH color space (CSS Working Group)
+* Material Design 3 tonal system
+* WCAG 2.1 accessibility standards
+* Color science best practices
+
+---
+
+**Made with ❤️ for designers and developers**
+
+--- package.json ---
+{
+  "name": "tonal-field",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@supabase/ssr": "^0.8.0",
+    "@supabase/supabase-js": "^2.89.0",
+    "next": "^14.2.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.30",
+    "@types/react": "^18.2.70",
+    "@types/react-dom": "^18.2.22",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "^14.2.5",
+    "typescript": "^5.4.5"
+  }
+}
+
+--- tsconfig.json ---
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./*"
+      ]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "supabase/functions"
+  ]
+}
+
+
+Search (rg):
+C:\Users\peorr\Desktop\Tonal-Field\README.md:143:* Recalcular respetando locks
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\@humanwhocodes\config-array\README.md:15:[Omitted long matching line]
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\@humanwhocodes\config-array\README.md:290:* The config array caches configs, so subsequent calls to `getConfig()` with the same filename will return in a fast lookup rather than another calculation.
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\@humanwhocodes\config-array\README.md:330:[Omitted long matching line]
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\@humanwhocodes\config-array\api.js:576:// used to store calculate data for faster lookup
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\@humanwhocodes\config-array\api.js:625:		 * This is used to calculate filename matches.
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\@humanwhocodes\config-array\api.js:641:		 * A cache to store calculated configs for faster repeat lookup.
+C:\Users\peorr\Desktop\Tonal-Field\lib\color\tonal.ts:99: * Calculates perceptual contrast ratio based on lightness difference
+C:\Users\peorr\Desktop\Tonal-Field\lib\color\tonal.ts:106: * This is more predictable than WCAG's relative luminance calculation
+C:\Users\peorr\Desktop\Tonal-Field\lib\color\theme.ts:4:import { calculateContrast, adjustForContrast } from "./accessibility";
+C:\Users\peorr\Desktop\Tonal-Field\lib\color\theme.ts:142:  const textBgContrast = calculateContrast(palette.text, palette.background);
+C:\Users\peorr\Desktop\Tonal-Field\lib\color\theme.ts:148:  const textSurfaceContrast = calculateContrast(palette.text, palette.surface);
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\@isaacs\cliui\build\index.cjs:60:        //  replacing ' ' with padding calculations.
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\@isaacs\cliui\build\index.cjs:234:        // any unset widths should be calculated.
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\@isaacs\cliui\build\index.cjs:258:// calculates the minimum width of
+C:\Users\peorr\Desktop\Tonal-Field\lib\color\model.ts:8:  chromaOverride?: number; // For Spectrum Mode: override chroma calculation
+C:\Users\peorr\Desktop\Tonal-Field\lib\color\model.ts:53:  // Use chromaOverride if provided (Spectrum Mode), otherwise calculate from energy
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\@isaacs\cliui\build\lib\index.js:59:        //  replacing ' ' with padding calculations.
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\@isaacs\cliui\build\lib\index.js:233:        // any unset widths should be calculated.
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\@isaacs\cliui\build\lib\index.js:257:// calculates the minimum width of
+C:\Users\peorr\Desktop\Tonal-Field\lib\color\hierarchy.ts:265: * Calculate visual weight distribution
+C:\Users\peorr\Desktop\Tonal-Field\lib\color\hierarchy.ts:268:export function calculateVisualWeight(size: KitSize): Record<PaletteRole, number> {
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\@eslint\eslintrc\lib\config-array\ignore-pattern.js:50: * @param {string[]} sourcePaths The paths to calculate the common ancestor.
+C:\Users\peorr\Desktop\Tonal-Field\lib\color\accessibility.ts:99: * Calculates relative luminance according to WCAG 2.1
+C:\Users\peorr\Desktop\Tonal-Field\lib\color\accessibility.ts:116: * Calculates WCAG 2.1 contrast ratio between two colors
+C:\Users\peorr\Desktop\Tonal-Field\lib\color\accessibility.ts:122:export function calculateContrast(color1: OKLCH, color2: OKLCH): number {
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\@rushstack\eslint-patch\README.md:148:[Omitted long matching line]
+C:\Users\peorr\Desktop\Tonal-Field\app\guides\oklch-color-space\page.tsx:39:          <li><strong>Better Contrast Prediction:</strong> More accurate WCAG calculations</li>
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\@rushstack\eslint-patch\lib\eslint-bulk-suppressions\bulk-suppressions-patch.js:105:function calculateScopeId(node) {
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\@rushstack\eslint-patch\lib\eslint-bulk-suppressions\bulk-suppressions-patch.js:165:    const scopeId = calculateScopeId(currentNode);
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\@rushstack\eslint-patch\lib\eslint-bulk-suppressions\bulk-suppressions-patch.js.map:1:[Omitted long matching line]
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\@types\react\ts5.0\index.d.ts:919:         * {@link Profiler} subtree without any optimizations. It is calculated by summing up the most
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\@types\react\index.d.ts:918:         * {@link Profiler} subtree without any optimizations. It is calculated by summing up the most
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\@supabase\ssr\CHANGELOG.md:101:- 18327fc: fix cookie chunking length calculation
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\@supabase\realtime-js\src\lib\timer.ts:2: * Creates a timer that accepts a `timerCalc` function to perform calculated timeout retries, such as exponential backoff.
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\@types\node\buffer.d.ts:334:             * @param string A value to calculate the length of.
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\@types\node\buffer.d.ts:1776:             * @param [byteOffset=0] Where to begin searching in `buf`. If negative, then offset is calculated from the end of `buf`.
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\@types\node\buffer.d.ts:1845:             * @param [byteOffset=buf.length - 1] Where to begin searching in `buf`. If negative, then offset is calculated from the end of `buf`.
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\@types\node\buffer.buffer.d.ts:174:             * If `totalLength` is not provided, it is calculated from the `Buffer` instances
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\@types\node\crypto.d.ts:362:         * // Calculate a rolling hash.
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\@types\node\crypto.d.ts:397:         * Calculates the digest of all of the data passed to be hashed (using the `hash.update()` method).
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\@types\node\crypto.d.ts:491:         * Calculates the HMAC digest of all of the data passed using `hmac.update()`.
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\@types\node\dgram.d.ts:274:         * contain multi-byte characters, `offset` and `length` will be calculated with
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\@types\node\http2.d.ts:2178:         * this, the implicit/mutable headers will be calculated and call this function.
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\@types\node\http.d.ts:877:         * this, the implicit/mutable headers will be calculated and call this function.
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\@types\node\perf_hooks.d.ts:266:         * eventLoopUtilization is similar to CPU utilization except that it is calculated using high precision wall-clock time.
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\@types\node\perf_hooks.d.ts:815:         * Calculates the amount of time (in nanoseconds) that has passed since the
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\@types\node\os.d.ts:59:     * The load average is a measure of system activity calculated by the operating
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\@types\node\os.d.ts:140:     * `os.cpus().length` should not be used to calculate the amount of parallelism
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\@types\node\globals.d.ts:38:     *   // Create an error without stack trace to avoid calculating the stack trace twice.
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\@types\node\stream.d.ts:586:             * This method calls *fn* on each chunk of the stream in order, passing it the result from the calculation
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\@types\node\readline.d.ts:238:         * line prompts are included in the calculations.
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\@types\node\ts5.6\buffer.buffer.d.ts:172:             * If `totalLength` is not provided, it is calculated from the `Buffer` instances
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\ajv\README.md:1232:[Omitted long matching line]
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\axe-core\axe.js:24299:      return _flattenColors(calculateBlendedForegroundColor(fgColor, context, stackingContexts), new color_default(255, 255, 255, 1));
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\axe-core\axe.js:24318:    function calculateBlendedForegroundColor(fgColor, context, stackingContexts) {
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\argparse\argparse.js:581:        // if optionals and positionals are available, calculate usage
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\axe-core\locales\pt_PT.json:559:      "incomplete": "Não foi possível calcular o texto acessível"
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\chalk\readme.md:256:const calculateFeet = miles => miles * 5280;
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\chalk\readme.md:260:	In {bold ${miles} miles}, there are {green.bold ${calculateFeet(miles)} feet}.
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\wrap-ansi-cjs\index.js:22:// Calculate the length of words split on ' ', ignoring
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\wrap-ansi\index.js:20:// Calculate the length of words split on ' ', ignoring
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\damerau-levenshtein\index.js:3:// Cache the matrix. Note that if you not pass a limit this implementation will use a dynamically calculate one.
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\damerau-levenshtein\index.js:11:  // If the limit is not defined it will be calculate from this and that args.
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\damerau-levenshtein\index.js:32:  // Calculate matrix.
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\es-abstract\CHANGELOG.md:242:  * [Fix] `ES2017`+: `RawBytesToNumber`, `RawBytesToNumeric`: fix exponent calculation for Float64, improve tests
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\undici-types\mock-interceptor.d.ts:38:  /** Set automatically calculated content-length header on subsequent mocked replies. */
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\eslint\lib\source-code\token-store\utils.js:22:         * Calculate the index in the middle between minIndex and maxIndex.
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\eslint\lib\source-code\source-code.js:898:        // calculate fresh config nodes
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\eslint\lib\shared\traverser.js:164:     * Calculates the keys to use for traversal.
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\eslint\lib\rule-tester\flat-rule-tester.js:616:                const calculatedConfig = proto[ConfigArraySymbol.finalizeConfig].apply(this, args);
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\eslint\lib\rule-tester\flat-rule-tester.js:619:                calculatedConfig.languageOptions.parser = wrapParser(calculatedConfig.languageOptions.parser);
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\eslint\lib\rule-tester\flat-rule-tester.js:620:                return calculatedConfig;
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\eslint\lib\linter\linter.js:552:     * Calculate ECMAScript edition number from official year version starting with
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\eslint\lib\cli.js:382:                await engine.calculateConfigForFile(options.printConfig);
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\eslint\lib\linter\apply-disable-directives.js:62:     * All calculated offsets will be relative to this index.
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\eslint\lib\cli-engine\lint-result-cache.js:44: * Calculates the hash of the config
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\eslint\lib\eslint\flat-eslint.js:105: * It will calculate the error and warning count for collection of messages per file
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\eslint\lib\eslint\flat-eslint.js:110:function calculateStatsPerFile(messages) {
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\eslint\lib\eslint\flat-eslint.js:350: * Calculates the config array for this run based on inputs.
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\eslint\lib\eslint\eslint.js:661:    async calculateConfigForFile(filePath) {
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\eslint\lib\config\flat-config-schema.js:487:         * of calculating a config.
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\eslint\lib\cli-engine\cli-engine.js:155: * It will calculate the error and warning count for collection of messages per file
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\eslint\lib\cli-engine\cli-engine.js:160:function calculateStatsPerFile(messages) {
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\eslint\lib\cli-engine\cli-engine.js:191: * It will calculate the error and warning count for collection of results from all files
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\typescript\lib\_tsc.js:3678:  ObjectFlags3[ObjectFlags3["IdenticalBaseTypeCalculated"] = 33554432] = "IdenticalBaseTypeCalculated";
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\typescript\lib\_tsc.js:16815:          firstCommentLineIndent = calculateIndent(text, lineMap[firstCommentLineAndCharacter.line], commentPos);
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\typescript\lib\_tsc.js:16818:        const spacesToEmit = currentWriterIndentSpacing - firstCommentLineIndent + calculateIndent(text, pos, nextLineStart);
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\eslint\lib\rules\indent.js:119: * 3. After traversing the AST, calculate the expected indentation levels of every token according to the
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\eslint\lib\rules\indent-legacy.js:637:                // If function is standalone, simple calculate indent
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\typescript\lib\typescript.js:6536:  ObjectFlags3[ObjectFlags3["IdenticalBaseTypeCalculated"] = 33554432] = "IdenticalBaseTypeCalculated";
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\typescript\lib\typescript.js:20637:          firstCommentLineIndent = calculateIndent(text, lineMap[firstCommentLineAndCharacter.line], commentPos);
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\typescript\lib\typescript.js:20640:        const spacesToEmit = currentWriterIndentSpacing - firstCommentLineIndent + calculateIndent(text, pos, nextLineStart);
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\typescript\lib\typescript.d.ts:368:                 * if true returns details about default configured project calculation
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\typescript\lib\typescript.d.ts:6064:         * Calculates the final resolution mode for a given module reference node. This function only returns a result when module resolution
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\typescript\lib\typescript.d.ts:6096:         * Calculates the final resolution mode for an import at some index within a file's `imports` list. This function only returns a result
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\eslint\lib\rules\newline-before-return.js:118:         * @param {ASTNode} node The node to use as the start of the calculation
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\eslint\lib\rules\new-cap.js:65:function calculateCapIsNewExceptions(config) {
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\eslint\lib\rules\new-cap.js:145:        const capIsNewExceptions = calculateCapIsNewExceptions(config);
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\eslint\lib\rules\multiline-comment-style.js:120:         * Processes a comment group that is currently in separate-line form, calculating the offset for each line.
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\eslint\lib\rules\multiline-comment-style.js:134:         * Processes a comment group that is currently in starred-block form, calculating the offset for each line.
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\eslint\lib\rules\multiline-comment-style.js:151:         * Processes a comment group that is currently in bare-block form, calculating the offset for each line.
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\typescript\lib\pt-br\diagnosticMessages.generated.json:21:  "A_comma_expression_is_not_allowed_in_a_computed_property_name_1171": "Uma expressão de vírgula não é permitida em um nome de propriedade calculado.",
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\typescript\lib\pt-br\diagnosticMessages.generated.json:22:[Omitted long matching line]
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\typescript\lib\pt-br\diagnosticMessages.generated.json:28:  "A_computed_property_name_must_be_of_type_string_number_symbol_or_any_2464": "Um nome de propriedade calculado deve ser do tipo 'string', 'number', 'symbol' ou 'any'.",
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\eslint\lib\rules\no-invalid-this.js:116:                 * Most functions don't use `this`, and the calculation for `valid`
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\eslint\lib\rules\no-invalid-this.js:117:                 * is relatively costly, so we'll calculate it lazily when the first
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\eslint\lib\rules\sort-imports.js:124:         * Calculates number of lines between two nodes. It is assumed that the given `left` node appears before
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\typescript\lib\lib.dom.d.ts:3076:     * The `getComputedTiming()` method of the AnimationEffect interface returns the calculated timing properties for this animation effect.
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\typescript\lib\lib.dom.d.ts:4374:[Omitted long matching line]
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\typescript\lib\lib.dom.d.ts:12509: * The **`GeolocationCoordinates`** interface represents the position and altitude of the device on Earth, as well as the accuracy with which these properties are calculated.
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\typescript\lib\fr\diagnosticMessages.generated.json:716:[Omitted long matching line]
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\typescript\lib\es\diagnosticMessages.generated.json:21:  "A_comma_expression_is_not_allowed_in_a_computed_property_name_1171": "No se admite una expresión de coma en un nombre de propiedad calculada.",
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\typescript\lib\es\diagnosticMessages.generated.json:22:[Omitted long matching line]
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\typescript\lib\es\diagnosticMessages.generated.json:23:[Omitted long matching line]
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\eslint-plugin-jsx-a11y\docs\rules\anchor-ambiguous-text.md:29:The logic to calculate the inner text of an anchor is as follows:
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\eslint-plugin-jsx-a11y\docs\rules\alt-text.md:25:[Omitted long matching line]
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\fast-levenshtein\levenshtein.js:19:     * Calculate levenshtein distance of the two strings.
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\fast-levenshtein\levenshtein.js:49:        // calculate current row distance from previous row using collator
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\fast-levenshtein\levenshtein.js:81:        // calculate current row distance from previous row without collator
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\espree\lib\options.js:55:    // Calculate ECMAScript edition number from official year version starting with
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\file-entry-cache\changelog.md:75:[Omitted long matching line]
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\file-entry-cache\cache.js:41:       * Given a buffer, calculate md5 hash of its content.
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\file-entry-cache\cache.js:43:       * @param  {Buffer} buffer   buffer to calculate hash on
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\estraverse\estraverse.js:700:        // At first, we should calculate extended comment ranges.
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\eslint-plugin-react-hooks\cjs\eslint-plugin-react-hooks.development.js:1555:      // we might as well recalculate the list ignoring
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\graphemer\lib\Graphemer.js:11659:                                // E0.0   [8] (🖩..🖰)    POCKET CALCULATOR..TWO BUTTON MOUSE
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\eslint-plugin-import\lib\scc.js:30:        var scc = StronglyConnectedComponentsBuilder.calculate(context);
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\eslint-plugin-import\lib\scc.js:34:      }return _for;}() }, { key: 'calculate', value: function () {function calculate(
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\eslint-plugin-import\lib\scc.js:39:        var calculatedScc = (0, _scc2['default'])(adjacencyList);
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\lru-cache\README.md:54:  sizeCalculation: (value, key) => {
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\lru-cache\README.md:121:a size, either via the `sizeCalculation` method provided to the
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\lru-cache\README.md:122:constructor, or via a `size` or `sizeCalculation` option provided
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\type-fest\readme.md:497:			const hash = this.calculateArgumentsHash(...args);
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\type-fest\readme.md:507:		private calculateArgumentsHash(...args: any[]): string {
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\type-fest\readme.md:508:			// Calculate hash.
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\eslint-plugin-import\lib\rules\no-cycle.js:54:        description: 'When true, don\'t calculate a strongly-connected-components graph. SCC is used to reduce the time-complexity of cycle detection, but adds overhead.',
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\eslint-plugin-import\lib\exportMap\childContext.js:23:                                                                                                                * also calculate a cacheKey, where parts of the cacheKey hash are memoized
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\prelude-ls\CHANGELOG.md:8:- remove coverage calculation
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\eslint-plugin-import\docs\rules\no-cycle.md:99:[Omitted long matching line]
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\eslint-plugin-import\docs\rules\no-cycle.md:103:When this option is `true`, we don't calculate any SCC graph, and check all files for cycles (leading to higher time-complexity). Default is `false`.
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\eslint-plugin-import\CHANGELOG.md:248:- `importType`: fix `isExternalModule` calculation ([#2282], thanks [@mx-bernhard])
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\nanoid\index.cjs:33:  // values closer to the alphabet size. The bitmask calculates the closest
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\nanoid\index.browser.cjs:10:  // values closer to the alphabet size. The bitmask calculates the closest
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\nanoid\async\index.cjs:23:  // values closer to the alphabet size. The bitmask calculates the closest
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\nanoid\async\index.browser.cjs:5:  // values closer to the alphabet size. The bitmask calculates the closest
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\text-table\readme.markdown:107:* `opts.stringLength` - callback function to use when calculating the string length
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\text-table\readme.markdown:128:calculator during the main function call.
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\reusify\README.md:69:      // calculates fibonacci
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\react-dom\umd\react-dom.development.js:4455:  // This allows certain concepts to persist without recalculating them,
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\react-dom\umd\react-dom.development.js:9964:  } // Calculate the diff between the two objects.
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\react-dom\umd\react-dom.development.js:10344:      } else if (shouldWarnDev && true && // Convince Flow we've calculated it (it's DEV-only in this method.)
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\react-dom\umd\react-dom-server.browser.development.js:4757:      // First calculate how many bits in the base id represent a complete
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\react-dom\umd\react-dom-server-legacy.browser.development.js:4760:      // First calculate how many bits in the base id represent a complete
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\react-dom\cjs\react-dom.development.js:4445:// This allows certain concepts to persist without recalculating them,
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\react-dom\cjs\react-dom.development.js:9954:} // Calculate the diff between the two objects.
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\react-dom\cjs\react-dom.development.js:10334:    } else if (shouldWarnDev && true && // Convince Flow we've calculated it (it's DEV-only in this method.)
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\react\umd\react.development.js:1226:    // TODO: Second argument used to be an optional `calculateChangedBits`
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\react-dom\cjs\react-dom-server.node.development.js:4826:    // First calculate how many bits in the base id represent a complete
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\react-dom\cjs\react-dom-server.browser.development.js:4760:    // First calculate how many bits in the base id represent a complete
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\react-dom\cjs\react-dom-server-legacy.node.development.js:4764:    // First calculate how many bits in the base id represent a complete
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\react-dom\cjs\react-dom-server-legacy.browser.development.js:4763:    // First calculate how many bits in the base id represent a complete
+C:\Users\peorr\Desktop\Tonal-Field\node_modules\react\cjs\react.development.js:1236:  // TODO: Second argument used to be an optional `calculateChangedBits`

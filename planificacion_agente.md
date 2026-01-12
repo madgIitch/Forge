@@ -432,6 +432,16 @@ Voy a asumir **stack Node/TypeScript** (por tu perfil full-stack) y CLI primero 
 
 * No mete archivos enormes completos; usa snippets.
 
+**Resultados Sprint 1**
+
+* CLI funcionando contra repo real (`Tonal-Field`) con contexto (tree + key files + rg).
+* Consulta "¿Dónde se calcula X?": `rg` apuntó a `lib/color/accessibility.ts`, `lib/color/theme.ts`, `lib/color/tonal.ts` y `lib/color/hierarchy.ts`.
+* Límite actual: la respuesta puede ser genérica si la pregunta es vaga; conviene preguntar por un cálculo específico.
+
+**Test rápido sugerido**
+
+* "¿Dónde se calcula el contraste WCAG?"
+
 
 
 

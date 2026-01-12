@@ -1,0 +1,568 @@
+Question: ¿Dónde se calcula el contraste WCAG?
+
+Use ONLY the provided snippets. If the answer is not in the snippets, reply with: NEED_FILES: <paths>.
+
+Context:
+Repo tree (limited):
+.claude\
+.claude\settings.local.json
+.env.local
+.eslintrc.json
+.gitattributes
+.gitignore
+app\
+app\community\
+app\community\page.tsx
+app\cookies\
+app\cookies\page.tsx
+app\globals.css
+app\guides\
+app\guides\color-blindness\
+app\guides\color-systems\
+app\guides\coolors-alternative\
+app\guides\design-tokens\
+app\guides\dual-theme\
+app\guides\energy-tension\
+app\guides\layout.tsx
+app\guides\material-design-3\
+app\guides\oklch-color-space\
+app\guides\page.tsx
+app\guides\wcag-contrast\
+app\icon.png
+app\layout.tsx
+app\legal\
+app\legal\page.tsx
+app\license\
+app\license\page.tsx
+app\page.tsx
+app\pricing\
+app\pricing\page.tsx
+app\privacy\
+app\privacy\page.tsx
+app\robots.ts
+app\sitemap.ts
+app\studio\
+app\studio\page.tsx
+app\system\
+app\system\page.tsx
+app\terms\
+app\terms\page.tsx
+app\vs-coolors\
+app\vs-coolors\page.tsx
+app\vs-coolors\schema.json
+color-design-doc.pdf
+components\
+components\AuthModal.css
+components\AuthModal.tsx
+components\Field.tsx
+components\Footer.tsx
+components\Frame.tsx
+components\Header.tsx
+components\LegalPage.tsx
+components\Section.tsx
+components\Slider.tsx
+components\SubscriptionManager.tsx
+components\UpgradeModal.css
+components\UpgradeModal.tsx
+deploy-supabase-functions.md
+IMPLEMENTATION_SUMMARY.md
+lib\
+lib\auth\
+lib\auth\AuthProvider.tsx
+lib\color\
+lib\color\accessibility.ts
+lib\color\contrast.ts
+lib\color\export.ts
+lib\color\extract.ts
+lib\color\hierarchy.ts
+lib\color\model.ts
+lib\color\oklch.ts
+lib\color\palette.ts
+lib\color\theme.ts
+lib\color\tokens.ts
+lib\color\tonal.ts
+lib\community\
+lib\community\service.ts
+lib\community\supabase-service.ts
+
+Search (rg):
+rg no matches
+
+Key files:
+--- README.md ---
+# Tonal Field
+
+Explore color as a continuous space
+
+Tonal Field es una herramienta de diseño de sistemas de color que permite explorar el color como un campo continuo, controlado por dos dimensiones intuitivas: **Energy** (Calm → Vivid) y **Tension** (Soft → Sharp).
+
+A diferencia de herramientas como Coolors que generan paletas aleatorias, Tonal Field ofrece **control inteligente y criterio matemático** para crear sistemas de color utilizables directamente en producción.
+
+---
+
+## ✨ Características principales
+
+### 🎨 Field 2D (Diferencial de producto)
+
+Explora el color como un espacio continuo en lugar de colores discretos. Manipula Energy y Tension para entender cómo se relacionan los colores.
+
+### ⚡ Energy & Tension
+
+* **Energy:** Controla la saturación y vivacidad (Calm → Vivid)
+* **Tension:** Define la armonía y contraste (Soft → Sharp)
+* Algoritmo propio basado en métricas de color OKLCH
+
+### 🎯 Palette Kits
+
+Generación automática de sistemas de color utilizables:
+
+* **Primary, Accent, Background, Surface, Text, Muted**
+* Roles claramente definidos para diseño de UI
+* Jerarquía visual integrada
+
+### ♿ Accesibilidad integrada
+
+* Cálculo automático de contraste WCAG (AA/AAA)
+* Simulador de daltonismo (protanopia, deuteranopia, tritanopia)
+* Auto-fix de contraste manteniendo coherencia tonal
+
+### 🌓 Tema dual (Light/Dark)
+
+Genera automáticamente variantes light y dark coherentes con métricas de contraste.
+
+### 📤 Exports profesionales
+
+* CSS variables
+* Tailwind config
+* JSON tokens
+* Material UI theme
+* Plugins para Figma, Sketch, VS Code
+* Apple .clr format
+
+---
+
+## 🚀 Estado del MVP
+
+| Sprint | Feature | Estado |
+| ------ | ------- | ------ |
+| 0      | Setup fundacional | ✅ Completado |
+| 1      | Energy & Tension | ✅ Completado |
+| 2      | Field 2D interactivo | ✅ Completado |
+| 3      | Palette kits | ✅ Completado |
+| 4      | Accesibilidad | ✅ Completado |
+| 5      | Free/Pro model | ✅ Completado |
+| 6      | Export & persistencia | ✅ Completado |
+| 7      | Polish & release | ✅ Completado |
+| 8+     | Post-MVP features | 📋 Planificado |
+
+**Versión actual:** MVP funcional y público
+
+---
+
+## 📊 Posicionamiento vs Competencia
+
+| Aspecto | Coolors | Tonal Field | Ventaja |
+| ------- | ------- | ----------- | ------- |
+| Entrada rápida | ✅ | ⚠️ mejora | Coolors |
+| Control real | ❌ | ✅ | TF |
+| Sistema de color | ❌ | ✅ | TF |
+| Accesibilidad | ❌ | ✅ | TF |
+| Comunidad | Pasiva | Activa | TF |
+| Dev friendliness | Media | Alta | TF |
+| Diferenciación | Baja | Muy alta | TF |
+
+**Veredicto:** Tonal Field es más inteligente y potente. El próximo paso es mejorar accesibilidad/claridad para nuevos usuarios.
+
+---
+
+## 🛠️ Stack técnico
+
+* **Frontend:** Next.js 14 + TypeScript + React 18
+* **Color space:** OKLCH (native, WCAG-aware)
+* **Styling:** CSS + CSS variables
+* **State management:** React hooks
+* **Build:** Webpack (Next.js default)
+* **Deploy:** Vercel (recomendado)
+
+---
+
+## 📦 Instalación
+
+```bash
+# Clonar repositorio
+git clone https://github.com/yourusername/tonal-field.git
+cd tonal-field
+
+# Instalar dependencias
+npm install
+
+# Ejecutar servidor de desarrollo
+npm run dev
+
+# Build para producción
+npm run build
+
+# Iniciar servidor de producción
+npm run start
+```
+
+El servidor estará disponible en `http://localhost:3000`
+
+---
+
+## 📖 Documentación
+
+Consulta [MVP.md](./MVP.md) para:
+
+* Desglose detallado de sprints
+* Evaluación estratégica
+* Recomendaciones de UX
+* Roadmap post-MVP
+
+---
+
+## 🎯 Próximas mejoras (Sprints 8+)
+
+### Sprint 8 — Generación rápida y presets
+
+* Shuffle automático con seed consistente
+* Galería de presets populares
+* Variaciones rápidas
+
+### Sprint 9 — Lock por rol
+
+* Fijar colores individuales
+* Recalcular respetando locks
+* UI intuitiva de bloqueo
+
+### Sprint 10 — Importación desde imagen
+
+* Upload de imagen
+* Extracción de colores dominantes
+* OCR opcional para tonos
+
+### Sprint 11 — Exports ampliados
+
+* RGB, HSL, LCH además de OKLCH/HEX
+* Configs para más frameworks
+* Plugins para diseño (Figma, Sketch, VS Code)
+
+### Sprint 12 — Accesibilidad avanzada
+
+* Auto-fix para AA/AAA en todos los roles
+* Recomendaciones detalladas por par
+* Simulación visual mejorada
+
+### Sprint 13+ — AI y comunidad
+
+* Sugerencias inteligentes por estilo
+* Biblioteca pública de paletas
+* Sistema de colaboración
+
+---
+
+## 🤝 Contribuir
+
+Para contribuir al proyecto:
+
+1. Fork el repositorio
+2. Crea una rama para tu feature (`git checkout -b feature/mi-feature`)
+3. Commit tus cambios (`git commit -m "Add mi-feature"`)
+4. Push a la rama (`git push origin feature/mi-feature`)
+5. Abre un Pull Request
+
+Consulta [MVP.md](./MVP.md) para entender el roadmap y prioridades.
+
+---
+
+## 📄 Licencia
+
+MIT
+
+---
+
+## 🙋 Soporte
+
+Para reportar bugs o sugerir features:
+
+* Issues en GitHub
+* Email: [tu-email]
+* Twitter: [@tonalfield]
+
+---
+...[truncated]
+
+--- readme.md ---
+# Tonal Field
+
+Explore color as a continuous space
+
+Tonal Field es una herramienta de diseño de sistemas de color que permite explorar el color como un campo continuo, controlado por dos dimensiones intuitivas: **Energy** (Calm → Vivid) y **Tension** (Soft → Sharp).
+
+A diferencia de herramientas como Coolors que generan paletas aleatorias, Tonal Field ofrece **control inteligente y criterio matemático** para crear sistemas de color utilizables directamente en producción.
+
+---
+
+## ✨ Características principales
+
+### 🎨 Field 2D (Diferencial de producto)
+
+Explora el color como un espacio continuo en lugar de colores discretos. Manipula Energy y Tension para entender cómo se relacionan los colores.
+
+### ⚡ Energy & Tension
+
+* **Energy:** Controla la saturación y vivacidad (Calm → Vivid)
+* **Tension:** Define la armonía y contraste (Soft → Sharp)
+* Algoritmo propio basado en métricas de color OKLCH
+
+### 🎯 Palette Kits
+
+Generación automática de sistemas de color utilizables:
+
+* **Primary, Accent, Background, Surface, Text, Muted**
+* Roles claramente definidos para diseño de UI
+* Jerarquía visual integrada
+
+### ♿ Accesibilidad integrada
+
+* Cálculo automático de contraste WCAG (AA/AAA)
+* Simulador de daltonismo (protanopia, deuteranopia, tritanopia)
+* Auto-fix de contraste manteniendo coherencia tonal
+
+### 🌓 Tema dual (Light/Dark)
+
+Genera automáticamente variantes light y dark coherentes con métricas de contraste.
+
+### 📤 Exports profesionales
+
+* CSS variables
+* Tailwind config
+* JSON tokens
+* Material UI theme
+* Plugins para Figma, Sketch, VS Code
+* Apple .clr format
+
+---
+
+## 🚀 Estado del MVP
+
+| Sprint | Feature | Estado |
+| ------ | ------- | ------ |
+| 0      | Setup fundacional | ✅ Completado |
+| 1      | Energy & Tension | ✅ Completado |
+| 2      | Field 2D interactivo | ✅ Completado |
+| 3      | Palette kits | ✅ Completado |
+| 4      | Accesibilidad | ✅ Completado |
+| 5      | Free/Pro model | ✅ Completado |
+| 6      | Export & persistencia | ✅ Completado |
+| 7      | Polish & release | ✅ Completado |
+| 8+     | Post-MVP features | 📋 Planificado |
+
+**Versión actual:** MVP funcional y público
+
+---
+
+## 📊 Posicionamiento vs Competencia
+
+| Aspecto | Coolors | Tonal Field | Ventaja |
+| ------- | ------- | ----------- | ------- |
+| Entrada rápida | ✅ | ⚠️ mejora | Coolors |
+| Control real | ❌ | ✅ | TF |
+| Sistema de color | ❌ | ✅ | TF |
+| Accesibilidad | ❌ | ✅ | TF |
+| Comunidad | Pasiva | Activa | TF |
+| Dev friendliness | Media | Alta | TF |
+| Diferenciación | Baja | Muy alta | TF |
+
+**Veredicto:** Tonal Field es más inteligente y potente. El próximo paso es mejorar accesibilidad/claridad para nuevos usuarios.
+
+---
+
+## 🛠️ Stack técnico
+
+* **Frontend:** Next.js 14 + TypeScript + React 18
+* **Color space:** OKLCH (native, WCAG-aware)
+* **Styling:** CSS + CSS variables
+* **State management:** React hooks
+* **Build:** Webpack (Next.js default)
+* **Deploy:** Vercel (recomendado)
+
+---
+
+## 📦 Instalación
+
+```bash
+# Clonar repositorio
+git clone https://github.com/yourusername/tonal-field.git
+cd tonal-field
+
+# Instalar dependencias
+npm install
+
+# Ejecutar servidor de desarrollo
+npm run dev
+
+# Build para producción
+npm run build
+
+# Iniciar servidor de producción
+npm run start
+```
+
+El servidor estará disponible en `http://localhost:3000`
+
+---
+
+## 📖 Documentación
+
+Consulta [MVP.md](./MVP.md) para:
+
+* Desglose detallado de sprints
+* Evaluación estratégica
+* Recomendaciones de UX
+* Roadmap post-MVP
+
+---
+
+## 🎯 Próximas mejoras (Sprints 8+)
+
+### Sprint 8 — Generación rápida y presets
+
+* Shuffle automático con seed consistente
+* Galería de presets populares
+* Variaciones rápidas
+
+### Sprint 9 — Lock por rol
+
+* Fijar colores individuales
+* Recalcular respetando locks
+* UI intuitiva de bloqueo
+
+### Sprint 10 — Importación desde imagen
+
+* Upload de imagen
+* Extracción de colores dominantes
+* OCR opcional para tonos
+
+### Sprint 11 — Exports ampliados
+
+* RGB, HSL, LCH además de OKLCH/HEX
+* Configs para más frameworks
+* Plugins para diseño (Figma, Sketch, VS Code)
+
+### Sprint 12 — Accesibilidad avanzada
+
+* Auto-fix para AA/AAA en todos los roles
+* Recomendaciones detalladas por par
+* Simulación visual mejorada
+
+### Sprint 13+ — AI y comunidad
+
+* Sugerencias inteligentes por estilo
+* Biblioteca pública de paletas
+* Sistema de colaboración
+
+---
+
+## 🤝 Contribuir
+
+Para contribuir al proyecto:
+
+1. Fork el repositorio
+2. Crea una rama para tu feature (`git checkout -b feature/mi-feature`)
+3. Commit tus cambios (`git commit -m "Add mi-feature"`)
+4. Push a la rama (`git push origin feature/mi-feature`)
+5. Abre un Pull Request
+
+Consulta [MVP.md](./MVP.md) para entender el roadmap y prioridades.
+
+---
+
+## 📄 Licencia
+
+MIT
+
+---
+
+## 🙋 Soporte
+
+Para reportar bugs o sugerir features:
+
+* Issues en GitHub
+* Email: [tu-email]
+* Twitter: [@tonalfield]
+
+---
+...[truncated]
+
+--- package.json ---
+{
+  "name": "tonal-field",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@supabase/ssr": "^0.8.0",
+    "@supabase/supabase-js": "^2.89.0",
+    "next": "^14.2.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.30",
+    "@types/react": "^18.2.70",
+    "@types/react-dom": "^18.2.22",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "^14.2.5",
+    "typescript": "^5.4.5"
+  }
+}
+
+--- tsconfig.json ---
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./*"
+      ]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "supabase/functions"
+  ]
+}
