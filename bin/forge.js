@@ -3,7 +3,7 @@ const path = require('path');
 const fs = require('fs');
 
 function usage() {
-  console.log(`forge <command> [args]\n\nCommands:\n  chat     Chat with repo context (Ollama)\n  index    Build RAG index for a repo\n  apply    Apply unified diff with guardrails\n  config   Show or set defaults\n  help     Show help\n\nExamples:\n  forge chat --repo . --question "¿Dónde se calcula X?"\n  forge index --repo C:\\repo\n  forge apply --repo C:\\repo --diff change.diff\n  forge config\n  forge config --set repo=C:\\repo\n`);
+  console.log(`forge <command> [args]\n\nCommands:\n  chat     Chat with repo context (Ollama)\n  index    Build RAG index for a repo\n  apply    Apply unified diff with guardrails\n  run      Run lint/test/build and parse errors\n  config   Show or set defaults\n  help     Show help\n\nExamples:\n  forge chat --repo . --question "¿Dónde se calcula X?"\n  forge index --repo C:\\repo\n  forge apply --repo C:\\repo --diff change.diff\n  forge run --repo C:\\repo --task lint\n  forge run --repo C:\\repo --task lint --auto --auto-warn --attempts 2\n  forge config\n  forge config --set repo=C:\\repo\n`);
 }
 
 const CONFIG_PATH = path.join(__dirname, '..', '.forge', 'config.json');
@@ -23,7 +23,7 @@ function saveConfig(cfg) {
 
 function showHelp() {
   usage();
-  console.log('\nDetails:\n  forge chat   -> wraps scripts/forge_cli.js\n  forge index  -> wraps scripts/rag_index.js\n  forge apply  -> wraps scripts/apply_diff.js\n  forge config -> defaults stored in .forge/config.json\n');
+  console.log('\nDetails:\n  forge chat   -> wraps scripts/forge_cli.js\n  forge index  -> wraps scripts/rag_index.js\n  forge apply  -> wraps scripts/apply_diff.js\n  forge run    -> wraps scripts/run_task.js\n  forge config -> defaults stored in .forge/config.json\n');
 }
 
 const args = process.argv.slice(2);
@@ -63,6 +63,9 @@ switch (cmd) {
     break;
   case 'apply':
     run('apply_diff.js', args.slice(1));
+    break;
+  case 'run':
+    run('run_task.js', args.slice(1));
     break;
   case 'config': {
     const cfg = loadConfig();

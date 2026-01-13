@@ -619,6 +619,15 @@ Voy a asumir **stack Node/TypeScript** (por tu perfil full-stack) y CLI primero 
 
 * Si el diff no aplica, el agente reintenta con contexto actualizado.
 
+**Resultados Sprint 3**
+
+* Aplicacion de diff con backup y confirmacion interactiva OK.
+* Test real: `app/legal/page.tsx` (agregada linea CIF).
+
+**Estado**
+
+* ✅ Completado (apply + backup + guardrails validado).
+
 
 
 
@@ -696,6 +705,15 @@ Voy a asumir **stack Node/TypeScript** (por tu perfil full-stack) y CLI primero 
 
 
 * Implementas una tarea y el agente itera hasta pasar tests o declarar bloqueo con evidencia.
+
+**Resultados Sprint 4**
+
+* `forge run --task lint` ejecuta `next lint` y muestra warnings con rutas y lineas.
+* Archivos reportados: `app/community/page.tsx`, `app/page.tsx`, `app/studio/page.tsx`, `components/Header.tsx`, `lib/auth/AuthProvider.tsx`.
+
+**Estado**
+
+* ✅ Completado (run + parser validado con lint).
 
 
 

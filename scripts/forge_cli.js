@@ -387,7 +387,7 @@ async function gatherContext() {
   };
 }
 
-async function chatWithOllama(systemPrompt, userContent) {
+async function chatWithOllama(systemPrompt, userContent, expectDiff) {
   const url = `${DEFAULT_URL}/api/chat`;
   const body = {
     model,
@@ -418,6 +418,7 @@ async function chatWithOllama(systemPrompt, userContent) {
   const reader = res.body.getReader();
   const decoder = new TextDecoder();
   let buffer = '';
+  let collected = '';
 
   while (true) {
     const { value, done } = await reader.read();
@@ -432,9 +433,21 @@ async function chatWithOllama(systemPrompt, userContent) {
       const json = JSON.parse(line);
       if (json.message && json.message.content) {
         const cleaned = stripFences(json.message.content);
-        process.stdout.write(cleaned);
+        if (expectDiff) {
+          collected += cleaned;
+        } else {
+          process.stdout.write(cleaned);
+        }
       }
     }
+  }
+
+  if (expectDiff) {
+    const finalOut = collected.trim() + '\n';
+    if (!/^---\s.+\n\+\+\+\s.+/m.test(finalOut)) {
+      throw new Error('Invalid diff output (missing ---/+++).');
+    }
+    process.stdout.write(finalOut);
   }
 }
 
@@ -486,7 +499,7 @@ async function main() {
     return;
   }
 
-  await chatWithOllama(systemPrompt, userContent);
+  await chatWithOllama(systemPrompt, userContent, hasIncludedFiles);
   process.stdout.write('\n');
 }
 

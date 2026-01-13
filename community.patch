@@ -1,0 +1,11 @@
+--- a/app/community/page.tsx
++++ b/app/community/page.tsx
+@@ -43,7 +43,7 @@
+   // Load palettes on mount
+   useEffect(() => {
+     loadPalettes();
+-  }, []);
++  }, [loadPalettes]);
+ 
+   const loadPalettes = async () => {
+     setLoading(true);

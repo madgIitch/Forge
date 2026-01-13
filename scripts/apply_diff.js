@@ -17,6 +17,7 @@ function toInt(value, fallback) {
 const repoPath = getArg('--repo', process.cwd());
 const diffPath = getArg('--diff', null);
 const maxLines = toInt(getArg('--max-lines', '500'), 500);
+const autoYes = process.argv.includes('--yes');
 
 if (!diffPath) {
   console.error('Missing --diff path/to/patch.diff');
@@ -118,10 +119,12 @@ async function main() {
   console.log(`- Removed lines: ${removed}`);
   files.forEach((f) => console.log(`  - ${f}`));
 
-  const ok = await promptYesNo('Apply patch? (y/N): ');
-  if (!ok) {
-    console.log('Cancelled.');
-    return;
+  if (!autoYes) {
+    const ok = await promptYesNo('Apply patch? (y/N): ');
+    if (!ok) {
+      console.log('Cancelled.');
+      return;
+    }
   }
 
   if (!gitAvailable()) {
