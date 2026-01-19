@@ -27,6 +27,7 @@ const numCtx = toInt(getArg('--ctx', '4096'), 4096);
 const numPredict = toInt(getArg('--predict', '256'), 256);
 const dryRun = process.argv.includes('--dry-run');
 const dumpPath = getArg('--dump', null);
+const noValidateDiff = process.argv.includes('--no-validate-diff');
 const rgIncludeArg = getArg('--rg-include', null);
 const rgExcludeArg = getArg('--rg-exclude', null);
 const useRag = process.argv.includes('--rag');
@@ -389,17 +390,44 @@ async function gatherContext() {
 
 async function chatWithOllama(systemPrompt, userContent, expectDiff) {
   const url = `${DEFAULT_URL}/api/chat`;
+  const strictSystemPrompt = expectDiff
+    ? [
+        'You are a diff generator. Your ONLY job is to output unified diff format.',
+        '',
+        'CRITICAL RULES:',
+        '1. Start immediately with: --- a/path/to/file.ext',
+        '2. Next line must be: +++ b/path/to/file.ext',
+        '3. Then @@ hunk headers and changes',
+        '4. NO markdown, NO prose, NO explanations, NO code fences',
+        '5. NO "Here is", NO "Let me", NO titles, NO descriptions',
+        '6. If you write ANYTHING except diff format, you FAIL',
+        '',
+        'VALID OUTPUT EXAMPLE:',
+        '--- a/src/app.ts',
+        '+++ b/src/app.ts',
+        '@@ -10,3 +10,3 @@',
+        ' function test() {',
+        '-  const x = 1;',
+        '+  const x = 2;',
+        ' }',
+        '',
+        'START YOUR RESPONSE WITH --- (not with any text before it)',
+      ].join('\n')
+    : systemPrompt;
   const body = {
     model,
     stream: true,
     messages: [
-      { role: 'system', content: systemPrompt },
+      { role: 'system', content: strictSystemPrompt },
       { role: 'user', content: userContent }
     ],
     options: {
       num_ctx: numCtx,
       num_predict: numPredict,
-      temperature: 0.15
+      temperature: expectDiff ? 0.05 : 0.15, // Ultra-low temp for diffs
+      top_p: expectDiff ? 0.85 : 0.9,         // More focused sampling
+      repeat_penalty: expectDiff ? 1.05 : 1.1, // Slight penalty
+      stop: expectDiff ? ['\n---\n', '\n\nNote:', 'Explanation:', '```'] : undefined // Stop on common prose patterns
     }
   };
 
@@ -419,6 +447,8 @@ async function chatWithOllama(systemPrompt, userContent, expectDiff) {
   const decoder = new TextDecoder();
   let buffer = '';
   let collected = '';
+  let tokenCount = 0;
+  const earlyCheckLimit = 50; // Check first 50 chars
 
   while (true) {
     const { value, done } = await reader.read();
@@ -435,6 +465,19 @@ async function chatWithOllama(systemPrompt, userContent, expectDiff) {
         const cleaned = stripFences(json.message.content);
         if (expectDiff) {
           collected += cleaned;
+          tokenCount += cleaned.length;
+
+          // Early validation: if first 50 chars don't start with --- or look like prose, abort
+          if (tokenCount >= earlyCheckLimit && collected.length >= earlyCheckLimit) {
+            const start = collected.slice(0, earlyCheckLimit).trim();
+            if (!start.startsWith('---') && !start.startsWith('diff')) {
+              // Check for prose indicators
+              const proseIndicators = ['title:', 'In this', 'Here is', 'Let me', 'The ', 'This ', '# '];
+              if (proseIndicators.some(p => start.includes(p))) {
+                throw new Error('Model generated prose instead of diff (detected early)');
+              }
+            }
+          }
         } else {
           process.stdout.write(cleaned);
         }
@@ -444,7 +487,7 @@ async function chatWithOllama(systemPrompt, userContent, expectDiff) {
 
   if (expectDiff) {
     const finalOut = collected.trim() + '\n';
-    if (!/^---\s.+\n\+\+\+\s.+/m.test(finalOut)) {
+    if (!noValidateDiff && !/^---\s.+\n\+\+\+\s.+/m.test(finalOut)) {
       throw new Error('Invalid diff output (missing ---/+++).');
     }
     process.stdout.write(finalOut);

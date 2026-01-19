@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node:*)",
+      "Bash(powershell -Command \"\\(Get-Content ''c:\\\\Users\\\\peorr\\\\Desktop\\\\Tonal-Field\\\\.forge\\\\auto.last.prompt.txt''\\).Count\")"
+    ]
+  }
+}
